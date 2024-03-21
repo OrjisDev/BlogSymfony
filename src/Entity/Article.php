@@ -25,11 +25,11 @@ class Article
     #[ORM\Column(length: 255)]
     private ?string $autheur = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
-
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'article', orphanRemoval: true)]
     private Collection $comments;
+
+    #[ORM\Column(length: 255)]
+    private ?string $text = null;
 
     public function __construct()
     {
@@ -77,18 +77,6 @@ class Article
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): static
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Commentaire>
      */
@@ -115,6 +103,18 @@ class Article
                 $comment->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    public function setText(string $text): static
+    {
+        $this->text = $text;
 
         return $this;
     }

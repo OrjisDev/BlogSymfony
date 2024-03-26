@@ -48,7 +48,7 @@ class CreateArticleCommand extends Command
             $article = new Article;
             $article -> setTitre("Article numéro ".$compteur);
             $article -> setText("Hello world ".$compteur);
-            $article -> setAutheur("Joris");
+            $article -> setAuteur("Joris");
             $article -> setDate(new \DateTime());
             $this->entityManager->persist($article);
         }

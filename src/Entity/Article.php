@@ -23,7 +23,7 @@ class Article
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $autheur = null;
+    private ?string $auteur = null;
 
     #[ORM\OneToMany(targetEntity: Commentaire::class, mappedBy: 'article', orphanRemoval: true)]
     private Collection $comments;
@@ -65,14 +65,14 @@ class Article
         return $this;
     }
 
-    public function getAutheur(): ?string
+    public function getAuteur(): ?string
     {
-        return $this->autheur;
+        return $this->auteur;
     }
 
-    public function setAutheur(string $autheur): static
+    public function setAuteur(string $auteur): static
     {
-        $this->autheur = $autheur;
+        $this->auteur = $auteur;
 
         return $this;
     }

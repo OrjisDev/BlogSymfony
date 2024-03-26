@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PublicController!{% endblock %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+   <div>
+        <h1>{{article.Titre }}</h1>
+        <h3>{{article.Auteur }}</h3>
+    </div>
+    {% for comment in comments %}
+        <div>
+            <h1>{{comment.Texte }}</h1>
+            <h3>{{comment.Auteur }}</h3>
+        </div>
+    {% endfor %}
+{% endblock %}

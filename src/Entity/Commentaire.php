@@ -16,7 +16,7 @@ class Commentaire
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $autheur = null;
+    private ?string $auteur = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
@@ -33,14 +33,14 @@ class Commentaire
         return $this->id;
     }
 
-    public function getAutheur(): ?string
+    public function getAuteur(): ?string
     {
-        return $this->autheur;
+        return $this->auteur;
     }
 
-    public function setAutheur(string $autheur): static
+    public function setAuteur(string $auteur): static
     {
-        $this->autheur = $autheur;
+        $this->auteur = $auteur;
 
         return $this;
     }

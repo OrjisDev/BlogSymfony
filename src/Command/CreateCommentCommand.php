@@ -56,7 +56,7 @@ class CreateCommentCommand extends Command
             $io->comment('Création commentaire '.$compteur);
             $commentaire = new Commentaire();
             $commentaire->setTexte('Commentaire '.$compteur);
-            $commentaire->setAutheur('Joris');
+            $commentaire->setAuteur('Joris');
             $commentaire->setDate(new \DateTime());
             $commentaire->setArticle($article);
             $this->entityManager->persist($commentaire);

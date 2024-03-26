@@ -2,6 +2,10 @@
 
 namespace App\Command;
 
+use App\Entity\Commentaire;
+use App\Repository\ArticleRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use PhpParser\Comment;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -16,33 +20,49 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class CreateCommentCommand extends Command
 {
-    public function __construct()
+    protected ArticleRepository $articleRepository;
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(EntityManagerInterface $entityManager, 
+                                ArticleRepository $articleRepository)
     {
         parent::__construct();
+        $this->entityManager = $entityManager;
+        $this->articleRepository = $articleRepository;
     }
 
     protected function configure(): void
     {
         $this
-            ->addArgument('arg1', InputArgument::OPTIONAL, 'Argument description')
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
+            ->addArgument('nb_commentaire', InputArgument::REQUIRED, 'Nombre de commentaire')
+            ->addArgument('id_article', InputArgument::REQUIRED, 'Id de l\'article')
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $arg1 = $input->getArgument('arg1');
+        $idArticle = $input->getArgument('id_article');
+        $article = $this->articleRepository->find($idArticle);
 
-        if ($arg1) {
-            $io->note(sprintf('You passed an argument: %s', $arg1));
+        if(!$article){
+            $io-> error('Imposible de trouver l\'article '.$idArticle);
+            return Command::FAILURE;
         }
 
-        if ($input->getOption('option1')) {
-            // ...
+        $nbCommentaires = $input->getArgument('nb_commentaire');
+
+        for($compteur =0; $compteur < $nbCommentaires; $compteur++){
+            $io->comment('Création commentaire '.$compteur);
+            $commentaire = new Commentaire();
+            $commentaire->setTexte('Commentaire '.$compteur);
+            $commentaire->setAutheur('Joris');
+            $commentaire->setDate(new \DateTime());
+            $commentaire->setArticle($article);
+            $this->entityManager->persist($commentaire);
         }
 
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $this->entityManager->flush();
 
         return Command::SUCCESS;
     }

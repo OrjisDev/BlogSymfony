@@ -7,6 +7,7 @@ use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class PublicController extends AbstractController
 {
@@ -40,7 +41,7 @@ class PublicController extends AbstractController
         ]);
     }
     #[Route('/article/{id}', name: 'app_article')]
-    public function article(int $id): Response
+    public function article(int $id, AuthenticationUtils $authenticationUtils): Response
     {
         $article = $this->articleRepository->find($id);
         $commentaires = $article->getComments();
@@ -50,4 +51,9 @@ class PublicController extends AbstractController
             'comments' => $commentaires
         ]);
     }
+
+    public function addComment() : void{
+        
+    }
+
 }

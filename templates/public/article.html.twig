@@ -7,13 +7,15 @@
 
 {% block body %}
    <div>
-        <h1>{{article.Titre }}</h1>
-        <h3>{{article.Auteur }}</h3>
+        <h1>{{article.Titre }} par {{article.Auteur }}</h1>
     </div>
     {% for comment in comments %}
-        <div>
-            <h1>{{comment.Texte }}</h1>
-            <h3>{{comment.Auteur }}</h3>
-        </div>
+        <h3>{{comment.Auteur}} à écrit : {{comment.Texte }}</h3>
     {% endfor %}
+    
+    {% if app.user %}
+        <div>
+            <h1>Utilisateur connecté</h1>
+        </div>
+    {% endif %}
 {% endblock %}

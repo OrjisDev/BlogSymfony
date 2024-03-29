@@ -9,8 +9,9 @@
 
     {% for article in articles %}
     <div>
-        <h1>{{article.Titre }}</h1>
+        <h1><a href="{{ path('app_article', {id: article.id} )}}">{{article.Titre }}</a></h1>
         <h3>{{article.Auteur }}</h3>
+        
     </div>
     {% endfor %}
 {% endblock %}

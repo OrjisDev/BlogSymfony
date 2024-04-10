@@ -2,26 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Task;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use App\Form\Type\TaskType;
+use App\Kernel;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class PublicController extends AbstractController
 {
-    //1 Article Repository à ajouer en autowire
-    //2 On charge les articles
-    //3 On passe les articles à la vue twig
-    //4 On modifie la vue twig pour rendre les articles visibles
-
-    //5 On crée une autre Route article (qui va afficher un article et ses commentaires)
-    //6 On charge un article et ses Commentaires avec Article repository
-    //7 On passe les infos à la vue
-    //8 On modifie la vues
-
-    //9 On crée un lien dans la vue TWIG acceuil, pour aller vers la route article
 
     protected ArticleRepository $articleRepository;
 
@@ -41,8 +36,9 @@ class PublicController extends AbstractController
         ]);
     }
     #[Route('/article/{id}', name: 'app_article')]
-    public function article(int $id, AuthenticationUtils $authenticationUtils): Response
+    public function article(int $id): Response
     {
+
         $article = $this->articleRepository->find($id);
         $commentaires = $article->getComments();
 
@@ -51,9 +47,5 @@ class PublicController extends AbstractController
             'comments' => $commentaires
         ]);
     }
-
-    public function addComment() : void{
-        
-    }
-
+    
 }
